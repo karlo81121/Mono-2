@@ -14,13 +14,13 @@ namespace Employees.WebAPI.Controllers
         static List<Employee> employees = new List<Employee>();
 
         // GET: api/Employee
-        public List<Employee> Get()
+        public HttpResponseMessage Get()
         {
             if(employees.Count == 0)
             {
-                return null;
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-            return employees;
+            return Request.CreateResponse(HttpStatusCode.OK, employees);
         }
 
         // GET: api/Employee/5
