@@ -47,5 +47,17 @@ namespace Employees.Service
                 return false;
             }
         }
+
+        public bool UpdateEmployeeById(int id, Employee.Model.Employee employee)
+        {
+            if (employeeRepositroy.UpdateEmployeeById(id, employee) == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

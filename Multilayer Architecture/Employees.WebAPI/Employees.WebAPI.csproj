@@ -256,10 +256,6 @@
       <Project>{26CB23CF-E800-4653-B72E-7A45F4903E7C}</Project>
       <Name>Employees.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Salary.Model\Salary.Model.csproj">
-      <Project>{BC0AE772-FB6F-4871-964F-6A82AEBAC7E6}</Project>
-      <Name>Salary.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

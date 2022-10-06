@@ -15,7 +15,7 @@ namespace Employees.WebAPI.Controllers
 
         // GET: api/Employee
         [HttpGet]
-        public HttpResponseMessage findAllEmployees()
+        public HttpResponseMessage GetAllEmployees()
         {
             List<Employee.Model.Employee> employees = new List<Employee.Model.Employee>();
             employees = employeeService.GetAllEmployees();
@@ -56,32 +56,29 @@ namespace Employees.WebAPI.Controllers
         }
 
         // PUT: api/Employee/5
-        /*
-        public HttpResponseMessage Put(Guid id, Employee.Model.Employee employee)
+        public HttpResponseMessage UpdateEmployeeById(int id, Employee.Model.Employee employee)
         {
-            if (employee == null)
+            if(employeeService.UpdateEmployeeById(id, employee) == true)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.OK, "Updated successfully!");
             }
-            int index = employees.FindIndex(e => e.Id == id);
-            if (index == -1)
+            else
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Employee not found!");
             }
-            employees.RemoveAt(index);
-            employees.Add(employee);
-            return Request.CreateResponse(HttpStatusCode.OK, "Successfully updated!");
         }
-        */
 
         // DELETE: api/Employee/5
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage DeleteEmployeeById(int id)
         {
             if (employeeService.DeleteEmployeeById(id) == true)
             {
+                return Request.CreateResponse(HttpStatusCode.OK, "Successfully deleted!");
+            }
+            else
+            {
                 return Request.CreateResponse(HttpStatusCode.NoContent, "Nothing to delete!");
             }
-            return Request.CreateResponse(HttpStatusCode.OK, "Successfully deleted!");
         }
     }
 }

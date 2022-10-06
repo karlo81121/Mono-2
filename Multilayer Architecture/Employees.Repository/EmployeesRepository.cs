@@ -122,7 +122,7 @@ namespace Employees.Repository
         public bool DeleteEmployeeById(int id)
         {
             string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
-            string sql = "DELETE FROM Employee WHERE ID = @Id";
+            string sql = "DELETE FROM Employee WHERE ID = @ID";
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -130,18 +130,51 @@ namespace Employees.Repository
             {
                 conn.Open();
 
-                SqlDataAdapter employeeAdapter = new SqlDataAdapter();
-                SqlParameter parameter = new SqlParameter();
-                SqlCommand command = new SqlCommand(sql, conn);
-
-                parameter = command.Parameters.Add("@id", SqlDbType.Int, 4, "id");
-                parameter.SourceVersion = DataRowVersion.Original;
-
-                employeeAdapter.DeleteCommand = command;
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
 
                 conn.Close();
             }
             catch(Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateEmployeeById(int id, Employee.Model.Employee employee)
+        {
+            string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
+            string sql = "UPDATE Employee SET ID = @id, @first_name = first_name, @last_name = last_name, @birth_date = birth_date, @gender = gender, @hire_date = hire_date";
+            string get = "SELECT * FROM Employee";
+
+            SqlConnection conn = new SqlConnection(connString);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(get, conn);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "Employee");
+
+            DataTable dt = ds.Tables["Emplyee"];
+            dt.Rows[0]["ID"] = "ID";
+            dt.Rows[1]["fist_name"] = "first_name";
+            dt.Rows[2]["last_name"] = "last_name";
+            dt.Rows[3]["birth_date"] = "birth_date";
+            dt.Rows[4]["gender"] = "gender";
+            dt.Rows[5]["hire_date"] = "hire_date";
+
+            try
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                adapter.UpdateCommand = cmd;
+                adapter.Update(ds, "Employee");
+
+                conn.Close();
+
+            }
+            catch (Exception e)
             {
                 return false;
             }

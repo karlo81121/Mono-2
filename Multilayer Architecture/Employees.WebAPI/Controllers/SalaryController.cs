@@ -1,5 +1,4 @@
-﻿using Salary.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,15 +7,16 @@ using System.Web.Http;
 
 namespace Employees.WebAPI.Controllers
 {
+    /*
     public class SalaryController : ApiController
     {
-        /*
-        static List<Salary.Model.Salary> salaries = new List<Salary.Model.Salary>();
+        SalaryService salaryService = new SalaryService();
 
         // GET: api/Employee
         [HttpGet]
         public HttpResponseMessage findAllSalaries()
         {
+            List<Salary> salaries = new List<Salary>();
             if (salaries.Count == 0)
             {
                 return null;
@@ -81,6 +81,6 @@ namespace Employees.WebAPI.Controllers
             salaries.Remove(salary);
             return Request.CreateResponse(HttpStatusCode.OK, "Successfully deleted!");
         }
-        */
     }
+    */
 }

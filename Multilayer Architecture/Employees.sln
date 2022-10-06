@@ -5,7 +5,6 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employees.WebAPI", "Employees.WebAPI\Employees.WebAPI.csproj", "{1BAB73E5-6251-4527-AF4E-B0D0C52E28B6}"
 	ProjectSection(ProjectDependencies) = postProject
-		{BC0AE772-FB6F-4871-964F-6A82AEBAC7E6} = {BC0AE772-FB6F-4871-964F-6A82AEBAC7E6}
 		{055B9DE5-20C4-4586-A6A9-D8FD8B4A17A9} = {055B9DE5-20C4-4586-A6A9-D8FD8B4A17A9}
 	EndProjectSection
 EndProject
@@ -14,8 +13,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employees.Repository", "Employees.Repository\Employees.Repository.csproj", "{81E8B07C-FE37-40F6-BEBE-8B7464837261}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee.Model", "Employee.Model\Employee.Model.csproj", "{055B9DE5-20C4-4586-A6A9-D8FD8B4A17A9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.Model", "Salary.Model\Salary.Model.csproj", "{BC0AE772-FB6F-4871-964F-6A82AEBAC7E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +36,6 @@ Global
 		{055B9DE5-20C4-4586-A6A9-D8FD8B4A17A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{055B9DE5-20C4-4586-A6A9-D8FD8B4A17A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{055B9DE5-20C4-4586-A6A9-D8FD8B4A17A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC0AE772-FB6F-4871-964F-6A82AEBAC7E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC0AE772-FB6F-4871-964F-6A82AEBAC7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC0AE772-FB6F-4871-964F-6A82AEBAC7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC0AE772-FB6F-4871-964F-6A82AEBAC7E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
