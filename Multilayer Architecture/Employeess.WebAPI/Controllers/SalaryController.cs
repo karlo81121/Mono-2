@@ -19,14 +19,14 @@ namespace Employeess.WebAPI.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetAllSalariesAsync()
         {
-            List<Salary> salaries = new List<Salary>();
-            salaries = await salaryService.GetAllSalariesAsync();
-            List<SalaryRest> salariesRest = MapToREST(salaries);
+            List<Salary> salaries = await salaryService.GetAllSalariesAsync();
+            List<SalaryRest> salariesRest;
 
             if (salaries.Count == 0)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Salary not found!");
             }
+            salariesRest = MapToREST(salaries);
             return Request.CreateResponse(HttpStatusCode.OK, salariesRest);
         }
 
@@ -35,11 +35,12 @@ namespace Employeess.WebAPI.Controllers
         public async Task<HttpResponseMessage> GetSalaryByIdAsync(int id)
         {
             Salary salary = await salaryService.GetSalaryByIdAsync(id);
-            List<SalaryRest> salaryRest = MapToREST(new List<Salary> { salary });
+            List<SalaryRest> salaryRest;
 
             if (salary != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, salaryRest[0]);
+                salaryRest = MapToREST(new List<Salary> { salary });
+                return Request.CreateResponse(HttpStatusCode.OK, salaryRest.First());
             }
             else
             {
@@ -53,7 +54,7 @@ namespace Employeess.WebAPI.Controllers
         {
             List<Salary> salary = MapToDomain(new List<SalaryRest> { salaryRest });
 
-            if (await salaryService.AddNewSalaryAsync(salary[0]) == true)
+            if (await salaryService.AddNewSalaryAsync(salary.First()))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Successfully added!");
             }
@@ -65,9 +66,11 @@ namespace Employeess.WebAPI.Controllers
 
         // PUT: api/Salary/5
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdateSalaryByIdAsync([FromBody] int id, Salary salary)
+        public async Task<HttpResponseMessage> UpdateSalaryByIdAsync([FromBody] int id, SalaryRest salaryRest)
         {
-            if (await salaryService.UpdateSalaryByIdAsync(id, salary) == true)
+            List<Salary> salaries = MapToDomain(new List<SalaryRest> { salaryRest });
+
+            if (await salaryService.UpdateSalaryByIdAsync(id, salaries.First()))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Updated successfully!");
             }
@@ -81,7 +84,7 @@ namespace Employeess.WebAPI.Controllers
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteSalaryByIdAsync(int id)
         {
-            if (await salaryService.DeleteSalaryByIdAsync(id) == true)
+            if (await salaryService.DeleteSalaryByIdAsync(id))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Successfully deleted!");
             }

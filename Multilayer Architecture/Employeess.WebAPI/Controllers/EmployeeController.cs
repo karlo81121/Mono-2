@@ -1,4 +1,5 @@
 ﻿using Employeess.Model;
+using Employeess.Model.Common;
 using Employeess.Service;
 using System;
 using System.Collections.Generic;
@@ -20,15 +21,15 @@ namespace Employeess.WebAPI.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetAllEmployeesAsync()
         {
-            List<Employee> employees = new List<Employee>();
-            employees = await employeeService.GetAllEmployeesAsync();
-            List<EmployeeRest> employeeRests = MapToREST(employees);
+            List<Employee> employees = await employeeService.GetAllEmployeesAsync();
+            List<EmployeeRest> employeeRest = new List<EmployeeRest>();
 
             if (employees.Count == 0)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Employee not found!");
             }
-            return Request.CreateResponse(HttpStatusCode.OK, employeeRests);
+            employeeRest = MapToREST(employees);
+            return Request.CreateResponse(HttpStatusCode.OK, employeeRest);
         }
 
         // GET: api/Employee/5
@@ -36,15 +37,16 @@ namespace Employeess.WebAPI.Controllers
         public async Task<HttpResponseMessage> FindEmployeeByIdAsync(int id)
         {
             Employee employee = await employeeService.GetByIdAsync(id);
-            List<EmployeeRest> employeeRest = MapToREST(new List<Employee> { employee });
+            List<EmployeeRest> employeeRest = new List<EmployeeRest>();
 
-            if (employee != null)
+            if (employee == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, employeeRest[0]);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Employee not found!");
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Employee not found!");
+                employeeRest = MapToREST(new List<Employee> { employee });
+                return Request.CreateResponse(HttpStatusCode.OK, employeeRest.First());
             }
         }
 
@@ -52,9 +54,8 @@ namespace Employeess.WebAPI.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AddNewEmployeeAsync([FromBody] EmployeeRest employeeRest)
         {
-            List<Employee> employee = MapToDomain(new List<EmployeeRest> { employeeRest });
-
-            if (await employeeService.AddNewEmployeeAsync(employee[0]) == true)
+            List<Employee> employee = MapToDomain(new List<EmployeeRest> { employeeRest }); 
+            if (await employeeService.AddNewEmployeeAsync(employee.First()))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Successfully added!");
             }
@@ -66,9 +67,11 @@ namespace Employeess.WebAPI.Controllers
 
         // PUT: api/Employee/5
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdateEmployeeByIdAsync([FromBody] int id, Employee employee)
+        public async Task<HttpResponseMessage> UpdateEmployeeByIdAsync([FromBody] int id, EmployeeRest employeeRest)
         {
-            if (await employeeService.UpdateEmployeeByIdAsync(id, employee) == true)
+            List<Employee> employees = MapToDomain(new List<EmployeeRest> { employeeRest });
+
+            if (await employeeService.UpdateEmployeeByIdAsync(id, employees.First()))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Updated successfully!");
             }
@@ -82,7 +85,7 @@ namespace Employeess.WebAPI.Controllers
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteEmployeeByIdAsync(int id)
         {
-            if (await employeeService.DeleteEmployeeByIdAsync(id) == true)
+            if (await employeeService.DeleteEmployeeByIdAsync(id))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Successfully deleted!");
             }

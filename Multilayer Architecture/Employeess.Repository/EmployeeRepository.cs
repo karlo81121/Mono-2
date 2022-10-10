@@ -12,14 +12,13 @@ namespace Employeess.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {
+        string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
             List<Employee> employees = new List<Employee>();
-
-            string connectionString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
             string sql = "SELECT * FROM Employee";
 
-            SqlConnection conn = new SqlConnection(connectionString);
+            SqlConnection conn = new SqlConnection(connString);
 
             try
             {
@@ -52,7 +51,6 @@ namespace Employeess.Repository
         }
         public async Task<Employee> GetByIdAsync(int id)
         {
-            string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
             string sql = "SELECT * FROM Employee WHERE ID = " + id.ToString();
 
             SqlConnection conn = new SqlConnection(connString);
@@ -90,7 +88,6 @@ namespace Employeess.Repository
         }
         public async Task<bool> AddNewEmployeeAsync(Employee employee)
         {
-            string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
             string sql = "INSERT INTO Employee (ID, first_name, last_name, birth_date, gender, hire_date) VALUES (@id, @first_name, @last_name, @birth_date, @gender, @hire_date)";
 
             SqlConnection conn = new SqlConnection(connString);
@@ -114,15 +111,15 @@ namespace Employeess.Repository
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error: " + e.Message);
                 return false;
             }
             return true;
         }
 
         public async Task<bool> DeleteEmployeeByIdAsync(int id)
-        {
-            string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
-            string sql = "DELETE FROM Employee WHERE ID = @ID";
+        { 
+            string sql = "DELETE FROM Employee WHERE ID = " + id.ToString();
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -138,6 +135,7 @@ namespace Employeess.Repository
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error: " + e.Message);
                 return false;
             }
             return true;
@@ -145,8 +143,7 @@ namespace Employeess.Repository
 
         public async Task<bool> UpdateEmployeeByIdAsync(int id, Employee employee)
         {
-            string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
-            string sql = "UPDATE Employee SET ID = @id, @first_name = first_name, @last_name = last_name, @birth_date = birth_date, @gender = gender, @hire_date = hire_date";
+            string sql = "UPDATE Employee first_name = @first_name, last_name = @last_name, birth_date = @birth_date, gender = @gender, hire_date = @hire_date WHERE ID = " + id.ToString();
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -154,14 +151,22 @@ namespace Employeess.Repository
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@id", id);
-                await cmd.ExecuteNonQueryAsync();
+                SqlCommand sqlCommand = new SqlCommand(sql, conn);
+
+                sqlCommand.Parameters.Add("@id", SqlDbType.Int, 4, "id").Value = employee.Id;
+                sqlCommand.Parameters.Add("@first_name", SqlDbType.VarChar, 20, "first_name").Value = employee.FirstName;
+                sqlCommand.Parameters.Add("@last_name", SqlDbType.VarChar, 20, "last_name").Value = employee.LastName;
+                sqlCommand.Parameters.Add("@birth_date", SqlDbType.Date, 10, "birth_date").Value = employee.BirthDate;
+                sqlCommand.Parameters.Add("@gender", SqlDbType.Char, 1, "gender").Value = employee.Gender;
+                sqlCommand.Parameters.Add("@hire_date", SqlDbType.Date, 10, "hire_date").Value = employee.HireDate;
+
+                await sqlCommand.ExecuteNonQueryAsync();
 
                 conn.Close();
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error: " + e.Message);
                 return false;
             }
             return true;
