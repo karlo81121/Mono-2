@@ -132,7 +132,7 @@ namespace Employeess.Repository
 
         public async Task<bool> UpdateSalaryByIdAsync(int id, Salary salary)
         {
-            string sql = "UPDATE Salary SET ID = @id, Amount = @amount";
+            string sql = "UPDATE Salary SET ID = @ID, Amount = @Amount WHERE ID = @ID";
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -141,9 +141,8 @@ namespace Employeess.Repository
                 conn.Open();
 
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
-
-                sqlCommand.Parameters.Add("@id", SqlDbType.Int, 4, "id").Value = salary.Id;
-                sqlCommand.Parameters.Add("@amount", SqlDbType.VarChar, 20, "amount").Value = salary.Amount;
+                sqlCommand.Parameters.Add("@ID", SqlDbType.Int, 4, "ID").Value = id;
+                sqlCommand.Parameters.Add("@Amount", SqlDbType.VarChar, 20, "first_name").Value = salary.Amount;
 
                 await sqlCommand.ExecuteNonQueryAsync();
 

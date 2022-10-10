@@ -72,7 +72,7 @@ namespace Employeess.WebAPI.Controllers
 
         // PUT: api/Salary/5
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdateSalaryByIdAsync([FromBody] int id, SalaryRest salaryRest)
+        public async Task<HttpResponseMessage> UpdateSalaryByIdAsync(int id,[FromBody] SalaryRest salaryRest)
         {
             List<Salary> salaries = MapToDomain(new List<SalaryRest> { salaryRest });
 
@@ -82,7 +82,7 @@ namespace Employeess.WebAPI.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Salary not found!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Salary not found!");
             }
         }
 
