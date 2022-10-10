@@ -1,5 +1,6 @@
 ﻿using Employeess.Model;
 using Employeess.Repository;
+using Employeess.Repository.Common;
 using Employeess.Service.Common;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,13 @@ namespace Employeess.Service
 {
     public class EmployeeService : IEmployeeService
     {
-        EmployeeRepository employeeRepository = new EmployeeRepository();
+        IEmployeeRepository employeeRepository;
+
+        public EmployeeService(IEmployeeRepository employeeRepositroy)
+        {
+            this.employeeRepository = employeeRepositroy;
+        }
+
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
             List<Employee> employees = await employeeRepository.GetAllEmployeesAsync();

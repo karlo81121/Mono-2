@@ -48,10 +48,16 @@
     <Reference Include="Autofac, Version=6.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.6.4.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=6.1.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.6.1.1\lib\net472\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -89,9 +95,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
@@ -281,6 +284,18 @@
     <ProjectReference Include="..\Employeess.Model\Employeess.Model.csproj">
       <Project>{5AD0A1BB-7E0B-426A-B11F-AE485998B349}</Project>
       <Name>Employeess.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Employeess.Repository.Common\Employeess.Repository.Common.csproj">
+      <Project>{1AB207B3-0364-476E-8F11-5447A6482591}</Project>
+      <Name>Employeess.Repository.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Employeess.Repository\Employeess.Repository.csproj">
+      <Project>{28438E74-D84B-49F8-A102-B74E13B93FAD}</Project>
+      <Name>Employeess.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Employeess.Service.Common\Employeess.Service.Common.csproj">
+      <Project>{2D7F4B12-4A31-4E52-8ABE-B75C261E3319}</Project>
+      <Name>Employeess.Service.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Employeess.Service\Employeess.Service.csproj">
       <Project>{F2449ADA-691E-4FE8-8C7D-B82C9E667BA2}</Project>

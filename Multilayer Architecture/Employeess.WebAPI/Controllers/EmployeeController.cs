@@ -1,6 +1,7 @@
 ﻿using Employeess.Model;
 using Employeess.Model.Common;
 using Employeess.Service;
+using Employeess.Service.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,11 @@ namespace Employeess.WebAPI.Controllers
 {
     public class EmployeeController : ApiController
     {
-        EmployeeService employeeService = new EmployeeService();
+        IEmployeeService employeeService;
+        public EmployeeController(IEmployeeService employeeService)
+        {
+            this.employeeService = employeeService;
+        }
 
         // GET: api/Employee
         [HttpGet]
@@ -67,7 +72,7 @@ namespace Employeess.WebAPI.Controllers
 
         // PUT: api/Employee/5
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdateEmployeeByIdAsync([FromBody] int id, EmployeeRest employeeRest)
+        public async Task<HttpResponseMessage> UpdateEmployeeByIdAsync(int id, [FromBody] EmployeeRest employeeRest)
         {
             List<Employee> employees = MapToDomain(new List<EmployeeRest> { employeeRest });
 
@@ -77,7 +82,7 @@ namespace Employeess.WebAPI.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Employee not found!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Employee not found!");
             }
         }
 

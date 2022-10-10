@@ -1,5 +1,6 @@
 ﻿using Employeess.Model;
 using Employeess.Repository;
+using Employeess.Repository.Common;
 using Employeess.Service.Common;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,13 @@ namespace Employeess.Service
 {
     public class SalaryService : ISalaryService
     {
-        SalaryRepository salaryRepository = new SalaryRepository();
+        ISalaryRepository salaryRepository;
+
+        public SalaryService(ISalaryRepository salaryRepository)
+        {
+            this.salaryRepository = salaryRepository;
+        }
+
         public async Task<List<Salary>> GetAllSalariesAsync()
         {
             List<Salary> salaries = await salaryRepository.GetAllSalariesAsync();

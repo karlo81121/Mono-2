@@ -143,7 +143,7 @@ namespace Employeess.Repository
 
         public async Task<bool> UpdateEmployeeByIdAsync(int id, Employee employee)
         {
-            string sql = "UPDATE Employee first_name = @first_name, last_name = @last_name, birth_date = @birth_date, gender = @gender, hire_date = @hire_date WHERE ID = " + id.ToString();
+            string sql = "UPDATE Employee SET first_name = @first_name, last_name = @last_name, birth_date = @birth_date, gender = @gender, hire_date = @hire_date WHERE ID = @ID";
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -152,8 +152,7 @@ namespace Employeess.Repository
                 conn.Open();
 
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
-
-                sqlCommand.Parameters.Add("@id", SqlDbType.Int, 4, "id").Value = employee.Id;
+                sqlCommand.Parameters.Add("@ID", SqlDbType.Int, 4, "ID").Value = id;
                 sqlCommand.Parameters.Add("@first_name", SqlDbType.VarChar, 20, "first_name").Value = employee.FirstName;
                 sqlCommand.Parameters.Add("@last_name", SqlDbType.VarChar, 20, "last_name").Value = employee.LastName;
                 sqlCommand.Parameters.Add("@birth_date", SqlDbType.Date, 10, "birth_date").Value = employee.BirthDate;

@@ -75,6 +75,10 @@
       <Project>{5AD0A1BB-7E0B-426A-B11F-AE485998B349}</Project>
       <Name>Employeess.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Employeess.Repository.Common\Employeess.Repository.Common.csproj">
+      <Project>{1AB207B3-0364-476E-8F11-5447A6482591}</Project>
+      <Name>Employeess.Repository.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Employeess.Repository\Employeess.Repository.csproj">
       <Project>{28438E74-D84B-49F8-A102-B74E13B93FAD}</Project>
       <Name>Employeess.Repository</Name>

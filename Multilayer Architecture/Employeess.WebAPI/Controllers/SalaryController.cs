@@ -1,6 +1,7 @@
 ﻿using Employeess.Model;
 using Employeess.Model.Common;
 using Employeess.Service;
+using Employeess.Service.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,12 @@ namespace Employeess.WebAPI.Controllers
 {
     public class SalaryController : ApiController
     {
-        SalaryService salaryService = new SalaryService();
+        ISalaryService salaryService;
+
+        public SalaryController(ISalaryService salaryService)
+        {
+            this.salaryService = salaryService;
+        }
 
         // GET: api/Salary
         [HttpGet]
