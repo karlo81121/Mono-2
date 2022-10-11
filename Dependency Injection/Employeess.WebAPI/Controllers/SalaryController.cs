@@ -1,4 +1,6 @@
-﻿using Employeess.Model;
+﻿using AutoMapper;
+using Employeess.Common;
+using Employeess.Model;
 using Employeess.Model.Common;
 using Employeess.Service;
 using Employeess.Service.Common;
@@ -15,10 +17,12 @@ namespace Employeess.WebAPI.Controllers
     public class SalaryController : ApiController
     {
         ISalaryService salaryService;
+        IMapper mapper;
 
-        public SalaryController(ISalaryService salaryService)
+        public SalaryController(ISalaryService salaryService, IMapper mapper)
         {
             this.salaryService = salaryService;
+            this.mapper = mapper;
         }
 
         // GET: api/Salary
@@ -32,7 +36,7 @@ namespace Employeess.WebAPI.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Salary not found!");
             }
-            salariesRest = MapToREST(salaries);
+            salariesRest = mapper.Map<List<SalaryRest>>(salaries);
             return Request.CreateResponse(HttpStatusCode.OK, salariesRest);
         }
 
@@ -41,16 +45,16 @@ namespace Employeess.WebAPI.Controllers
         public async Task<HttpResponseMessage> GetSalaryByIdAsync(int id)
         {
             Salary salary = await salaryService.GetSalaryByIdAsync(id);
-            List<SalaryRest> salaryRest;
+            SalaryRest salaryRest;
 
-            if (salary != null)
+            if (salary == null)
             {
-                salaryRest = MapToREST(new List<Salary> { salary });
-                return Request.CreateResponse(HttpStatusCode.OK, salaryRest.First());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Salary not found!");
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Salary not found!");
+                salaryRest = mapper.Map<SalaryRest>(salary);
+                return Request.CreateResponse(HttpStatusCode.OK, salaryRest);
             }
         }
 
@@ -58,9 +62,9 @@ namespace Employeess.WebAPI.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AddNewSalaryAsync([FromBody] SalaryRest salaryRest)
         {
-            List<Salary> salary = MapToDomain(new List<SalaryRest> { salaryRest });
+            Salary salary = mapper.Map<Salary>(salaryRest);
 
-            if (await salaryService.AddNewSalaryAsync(salary.First()))
+            if (await salaryService.AddNewSalaryAsync(salary))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Successfully added!");
             }
@@ -74,9 +78,9 @@ namespace Employeess.WebAPI.Controllers
         [HttpPut]
         public async Task<HttpResponseMessage> UpdateSalaryByIdAsync(int id,[FromBody] SalaryRest salaryRest)
         {
-            List<Salary> salaries = MapToDomain(new List<SalaryRest> { salaryRest });
+            Salary salary = mapper.Map<Salary>(salaryRest);
 
-            if (await salaryService.UpdateSalaryByIdAsync(id, salaries.First()))
+            if (await salaryService.UpdateSalaryByIdAsync(id, salary))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Updated successfully!");
             }

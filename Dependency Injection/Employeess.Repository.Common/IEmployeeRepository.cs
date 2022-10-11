@@ -1,4 +1,5 @@
-﻿using Employeess.Model;
+﻿using Employeess.Common;
+using Employeess.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Employeess.Repository.Common
 {
     public interface IEmployeeRepository
     {
-        Task<List<Employee>> GetAllEmployeesAsync();
+        Task<List<Employee>> GetAllEmployeesAsync(Paging paging);
         Task<Employee> GetByIdAsync(int id);
         Task<bool> AddNewEmployeeAsync(Employee employee);
         Task<bool> DeleteEmployeeByIdAsync(int id);

@@ -7,16 +7,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Employeess.Model;
 using Employeess.Repository.Common;
+using Employeess.Common;
 
 namespace Employeess.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {
         string connString = @"Server = DESKTOP-PK6EEMJ\SQLEXPRESS; Database = master; Trusted_Connection = True;";
-        public async Task<List<Employee>> GetAllEmployeesAsync()
+        public async Task<List<Employee>> GetAllEmployeesAsync(Paging paging)
         {
             List<Employee> employees = new List<Employee>();
-            string sql = "SELECT * FROM Employee";
+            StringBuilder stringBuilder = new StringBuilder();
+
+            int offset = (paging.PageNumber - 1) * paging.PageSize;
+
+            stringBuilder.Append("SELECT * FROM Employee ORDER BY ID ASC OFFSET " + offset + " ROWS FETCH NEXT " + paging.PageSize + " ROWS ONLY;");
+            //stringBuilder.Append("ORDER BY ID ASC ");
+            //stringBuilder.Append("OFFSET " + offset + " ROWS");
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -24,7 +31,11 @@ namespace Employeess.Repository
             {
                 conn.Open();
 
-                SqlCommand sqlCommand = new SqlCommand(sql, conn);
+                SqlCommand sqlCommand = new SqlCommand(stringBuilder.ToString(), conn);
+
+                sqlCommand.Parameters.Add("@pageSize", SqlDbType.Int, 10, "pageSize").Value = paging.PageSize;
+                sqlCommand.Parameters.Add("@offset", SqlDbType.Int, 10, "offset").Value = paging.PageNumber;
+
                 SqlDataReader employeeReader = await sqlCommand.ExecuteReaderAsync();
 
                 while (await employeeReader.ReadAsync())
@@ -36,7 +47,7 @@ namespace Employeess.Repository
                         DateTime.Parse(employeeReader[3].ToString()),
                         employeeReader[4].ToString(),
                         DateTime.Parse(employeeReader[5].ToString())
-                        ));
+                    ));
                 }
 
                 employeeReader.Close();
@@ -143,7 +154,7 @@ namespace Employeess.Repository
 
         public async Task<bool> UpdateEmployeeByIdAsync(int id, Employee employee)
         {
-            string sql = "UPDATE Employee SET first_name = @first_name, last_name = @last_name, birth_date = @birth_date, gender = @gender, hire_date = @hire_date WHERE ID = @ID";
+            string sql = "UPDATE Employee SET ID = @ID, first_name = @first_name, last_name = @last_name, birth_date = @birth_date, gender = @gender, hire_date = @hire_date WHERE ID = @ID";
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -152,7 +163,7 @@ namespace Employeess.Repository
                 conn.Open();
 
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
-                sqlCommand.Parameters.Add("@ID", SqlDbType.Int, 4, "ID").Value = id;
+                sqlCommand.Parameters.Add("@ID", SqlDbType.Int, 4, "ID").Value = employee.Id;
                 sqlCommand.Parameters.Add("@first_name", SqlDbType.VarChar, 20, "first_name").Value = employee.FirstName;
                 sqlCommand.Parameters.Add("@last_name", SqlDbType.VarChar, 20, "last_name").Value = employee.LastName;
                 sqlCommand.Parameters.Add("@birth_date", SqlDbType.Date, 10, "birth_date").Value = employee.BirthDate;

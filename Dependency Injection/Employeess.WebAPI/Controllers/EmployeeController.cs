@@ -1,4 +1,6 @@
-﻿using Employeess.Model;
+﻿using AutoMapper;
+using Employeess.Common;
+using Employeess.Model;
 using Employeess.Model.Common;
 using Employeess.Service;
 using Employeess.Service.Common;
@@ -15,25 +17,29 @@ using System.Web.UI.WebControls;
 namespace Employeess.WebAPI.Controllers
 {
     public class EmployeeController : ApiController
-    {
+    { 
         IEmployeeService employeeService;
-        public EmployeeController(IEmployeeService employeeService)
+        IMapper mapper;
+        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
         {
             this.employeeService = employeeService;
+            this.mapper = mapper;
         }
 
         // GET: api/Employee
         [HttpGet]
-        public async Task<HttpResponseMessage> GetAllEmployeesAsync()
+        public async Task<HttpResponseMessage> GetAllEmployeesAsync(int pageNumber, int pageSize)
         {
-            List<Employee> employees = await employeeService.GetAllEmployeesAsync();
-            List<EmployeeRest> employeeRest = new List<EmployeeRest>();
+            Paging paging = new Paging(pageNumber, pageSize);
+
+            List<Employee> employees = await employeeService.GetAllEmployeesAsync(paging);
+            List<EmployeeRest> employeeRest;
 
             if (employees.Count == 0)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Employee not found!");
             }
-            employeeRest = MapToREST(employees);
+            employeeRest = mapper.Map<List<EmployeeRest>>(employees);
             return Request.CreateResponse(HttpStatusCode.OK, employeeRest);
         }
 
@@ -42,7 +48,7 @@ namespace Employeess.WebAPI.Controllers
         public async Task<HttpResponseMessage> FindEmployeeByIdAsync(int id)
         {
             Employee employee = await employeeService.GetByIdAsync(id);
-            List<EmployeeRest> employeeRest = new List<EmployeeRest>();
+            EmployeeRest employeeRest; ;
 
             if (employee == null)
             {
@@ -50,8 +56,8 @@ namespace Employeess.WebAPI.Controllers
             }
             else
             {
-                employeeRest = MapToREST(new List<Employee> { employee });
-                return Request.CreateResponse(HttpStatusCode.OK, employeeRest.First());
+                employeeRest = mapper.Map<EmployeeRest>(employee);
+                return Request.CreateResponse(HttpStatusCode.OK, employeeRest);
             }
         }
 
@@ -59,8 +65,8 @@ namespace Employeess.WebAPI.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AddNewEmployeeAsync([FromBody] EmployeeRest employeeRest)
         {
-            List<Employee> employee = MapToDomain(new List<EmployeeRest> { employeeRest }); 
-            if (await employeeService.AddNewEmployeeAsync(employee.First()))
+            Employee employee = mapper.Map<Employee>(employeeRest); 
+            if (await employeeService.AddNewEmployeeAsync(employee))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Successfully added!");
             }
@@ -74,9 +80,9 @@ namespace Employeess.WebAPI.Controllers
         [HttpPut]
         public async Task<HttpResponseMessage> UpdateEmployeeByIdAsync(int id, [FromBody] EmployeeRest employeeRest)
         {
-            List<Employee> employees = MapToDomain(new List<EmployeeRest> { employeeRest });
+            Employee employee = mapper.Map<Employee>(employeeRest);
 
-            if (await employeeService.UpdateEmployeeByIdAsync(id, employees.First()))
+            if (await employeeService.UpdateEmployeeByIdAsync(id, employee))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, "Updated successfully!");
             }

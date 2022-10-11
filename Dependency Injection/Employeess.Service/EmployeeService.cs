@@ -1,4 +1,5 @@
-﻿using Employeess.Model;
+﻿using Employeess.Common;
+using Employeess.Model;
 using Employeess.Repository;
 using Employeess.Repository.Common;
 using Employeess.Service.Common;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace Employeess.Service
 {
@@ -19,9 +21,9 @@ namespace Employeess.Service
             this.employeeRepository = employeeRepositroy;
         }
 
-        public async Task<List<Employee>> GetAllEmployeesAsync()
+        public async Task<List<Employee>> GetAllEmployeesAsync([FromUri] Paging paging)
         {
-            List<Employee> employees = await employeeRepository.GetAllEmployeesAsync();
+            List<Employee> employees = await employeeRepository.GetAllEmployeesAsync(paging);
             return employees;
         }
 
