@@ -5,4 +5,5 @@
 #3 (5.10.2022.) - SSMS, SQL Server, Database, C# Console App (DatabaseTest) </br>
 #4 (6.10.2022.) - Employees, Salaries, WebAPI, SSMS, Multilayer Architecture </br>
 #5 (7.10.2022.) - Employees, Salaries, WebAPI, SSMS, Multilayer Architecture, Asynchronous programming </br>
-#6 (10.10.2022.) - Introduction to DI (Dependency Injection) - Theory
+#6 (10.10.2022.) - Introduction to DI (Dependency Injection) - Theory </br>
+#7 (11.10.2022.) - 
