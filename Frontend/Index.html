@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="index.css">
+    <title>Index</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h1 id="header-title">Pet appointments</h1>
+        <p id="header-paragraph">Manage your work flow!</p>
+        <hr class="header-line">
+
+        <div class="form-table-container">
+            <form class="pet-form" autocomplete="off">
+                <input id="name" name="name" type="text" placeholder="Name" />
+                <input id="nickname" name="nickname" type="text" placeholder="Nickname" />
+                <input id="age" name="age" type="number" placeholder="Age" />
+                <input id="type" name="type" type="text" placeholder="Animal type" />
+                <input id="time" name="time" type="text" placeholder="Time Ordered" />
+                <input id="day" name="day" type="text" placeholder="Day Ordered" />
+                <button class="pet-add-button" type="submit">Add pet</button>
+            </form>
+
+            <div class="pet-list-container">
+                <table class="pet-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Nickname</th>
+                        <th>Age</th>
+                        <th>Type</th>
+                        <th>Time Ordered</th>
+                        <th>Day Ordered</th>
+                        <th>Date Created</th>
+                        <th>Finish Appointment</th>
+                    </tr>
+                    <tbody class="table-body">
+                        
+                    </tbody>
+                </table>
+                <p id="pet-count">Number of appointments: </p>
+            </div>
+        </div>
+
+        <hr class="under-header-line">
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+</html>

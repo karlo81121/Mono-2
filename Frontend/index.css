@@ -1,0 +1,110 @@
+body {
+    background-color: #FFFFFF;
+    font-family: "Roboto";
+    overflow-x: hidden;
+}
+
+.form-table-container {
+    display: flex;
+    margin-left: 3%;
+}
+
+#header-title {
+    margin-left: 26%;
+}
+
+#header-paragraph {
+    margin-left: 26%;
+    margin-bottom: 2%;
+}
+
+.header-line {
+    width: 75%;
+}
+
+.under-header-line {
+    margin-top: 2%;
+    width: 75%;
+}
+
+.pet-add-button {
+    width: 208px;
+    height: 35px;
+    color: #2b8258;
+    margin-top: 3%;
+    font-weight: 600;
+}
+
+.pet-form {
+    margin-left: 15%;
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 200px;
+    height: 30px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+th, td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+p {
+    font-weight: bold;
+    margin-left: 15%;
+    margin-top: 1.5%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th {
+    background-color: #2b8258;
+}
+
+.pet-table {
+    margin-left: 15%;
+}
+
+.pet-list-container {
+    margin-top: 2%;
+}
+
+#pet-count {
+    margin-top: 5%;
+}
+
+.delete-appointment {
+    margin-left: 22%;
+}
+
+.delete-button {
+    width: 208px;
+    height: 35px;
+    color: #2b8258;
+    margin-top: 3%;
+    font-weight: 600;
+}
+
+#delete-paragraph {
+    margin-top: 3%;
+    margin-left: 22%;
+}
+.table-body button{
+    display: flex;
+    justify-content: center;
+    margin-left: 25%;
+}
