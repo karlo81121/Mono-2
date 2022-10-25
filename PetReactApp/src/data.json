@@ -1,0 +1,18 @@
+[ 
+    {
+        "Name": "Benjamin",
+        "Nickname": "Beni",
+        "Age": 10,
+        "Type": "Dog",
+        "TimeOrdered": "11:00h",
+        "DayOrdered": "23rd October 2023"
+    },
+    {
+        "Name": "Tomislav",
+        "Nickname": "Tomo",
+        "Age": 8,
+        "Type": "Cat",
+        "TimeOrdered": "9:00h",
+        "DayOrdered": "4th January 2023"
+    }
+]
