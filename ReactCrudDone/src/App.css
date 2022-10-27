@@ -1,0 +1,26 @@
+body {
+  background-color: #FFFFFF;
+}
+
+.all-projects {
+  margin-left: 230px;
+}
+
+.one-project, .filtered-project {
+  margin-left: 230px;
+  margin-top: 50px;
+}
+
+.post-project {
+  margin-left: 230px;
+  margin-top: 50px;
+}
+
+.delete-project {
+  margin-left: 230px;
+}
+
+.update-project {
+  margin-left: 230px;
+  margin-top: 50px;
+}

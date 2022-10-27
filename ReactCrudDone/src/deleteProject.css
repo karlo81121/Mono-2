@@ -1,0 +1,16 @@
+body {
+    background-color: #FFFFFF;
+}
+
+.delete-form {
+    margin-left: 230px;
+}
+
+.delete-button {
+    width: 200px;
+    height: 30px;
+}
+
+.delete-id-input {
+    width: 300px;
+}

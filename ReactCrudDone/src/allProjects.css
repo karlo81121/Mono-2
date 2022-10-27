@@ -1,0 +1,19 @@
+body {
+    background-color: #FFFFFF;
+}
+
+table {
+    border-collapse: collapse;
+    width: 75%;
+    margin-left: 230px;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  tr:nth-child() {
+    background-color: #dddddd;
+  }
